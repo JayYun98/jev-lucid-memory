@@ -1,0 +1,355 @@
+{
+  "kind": "local smoke; six hand-authored contrasts, not a general benchmark",
+  "provider": "clef",
+  "model": "clef-flash",
+  "threshold": 0.8,
+  "external_api_charges_usd": 0,
+  "hardware_cost_usd": null,
+  "cases": [
+    {
+      "id": "all",
+      "expected": true,
+      "no_memory": false,
+      "retrieval_only": false,
+      "shared_candidate_score": 0.932,
+      "shared_candidate_replay": true,
+      "shared_candidate_usage": {
+        "input_tokens": 437,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      },
+      "gated": false,
+      "latency_ms": 0.8568750054109842
+    },
+    {
+      "id": "first",
+      "expected": false,
+      "no_memory": false,
+      "retrieval_only": false,
+      "shared_candidate_score": 0.0995,
+      "shared_candidate_replay": false,
+      "shared_candidate_usage": {
+        "input_tokens": 440,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      },
+      "gated": false,
+      "latency_ms": 0.16450000111944973
+    },
+    {
+      "id": "count",
+      "expected": true,
+      "no_memory": false,
+      "retrieval_only": false,
+      "shared_candidate_score": 0.8808,
+      "shared_candidate_replay": true,
+      "shared_candidate_usage": {
+        "input_tokens": 435,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      },
+      "gated": false,
+      "latency_ms": 0.6027499912306666
+    },
+    {
+      "id": "explain",
+      "expected": false,
+      "no_memory": false,
+      "retrieval_only": false,
+      "shared_candidate_score": 0.2436,
+      "shared_candidate_replay": false,
+      "shared_candidate_usage": {
+        "input_tokens": 440,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      },
+      "gated": false,
+      "latency_ms": 0.15308300498872995
+    },
+    {
+      "id": "sample",
+      "expected": false,
+      "no_memory": false,
+      "retrieval_only": false,
+      "shared_candidate_score": 0.1394,
+      "shared_candidate_replay": false,
+      "shared_candidate_usage": {
+        "input_tokens": 439,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      },
+      "gated": false,
+      "latency_ms": 0.1666670141275972
+    },
+    {
+      "id": "export",
+      "expected": true,
+      "no_memory": false,
+      "retrieval_only": false,
+      "shared_candidate_score": 0.906,
+      "shared_candidate_replay": true,
+      "shared_candidate_usage": {
+        "input_tokens": 437,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      },
+      "gated": false,
+      "latency_ms": 0.1272910158149898
+    }
+  ],
+  "admission": {
+    "status": "pending",
+    "reason": "uncertain_criteria",
+    "shadow": false,
+    "candidate_hash": "28a8a306ab7a81b877506a22e8d212db9bd0d68674fcf272edbc5b95a4e7ed79"
+  },
+  "sleep": {
+    "reflected": true,
+    "results": [
+      {
+        "status": "pending",
+        "reason": "uncertain_criteria",
+        "shadow": false,
+        "candidate_hash": "792d4c18a25f6b7978495187ad8dd10af1d49daf10b39b56c97f7617cec769aa"
+      }
+    ]
+  },
+  "sleep_events": [
+    {
+      "id": 1,
+      "created": "2026-10-08T20:09:52.357Z",
+      "namespace": "demo",
+      "kind": "reflection",
+      "body": {
+        "count": 1,
+        "latency_ms": 4219.08420798718,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "status": "ok",
+        "trace_hash": "4767e553009e393bad0a46d26c97a29ab45bc2957cb106cb4b9b33bedbce865c",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 677,
+          "output_tokens": 189
+        }
+      }
+    },
+    {
+      "id": 2,
+      "created": "2026-10-08T20:09:54.298Z",
+      "namespace": "demo",
+      "kind": "admission",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "73c7d9358f8d2f8aff004e7ffc629ef6e084a1bfe706f5c8a0ec0ebf40871c12",
+        "latency_ms": 1940.4577909735963,
+        "model": "clef-flash",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "2558b5371558397e8ff3ac35d809b699381b5b4e47a524d78e10fa311f0d2835",
+        "scores": {
+          "actionable": 0.5278,
+          "supported": 0.6918,
+          "transferable": 0.9344
+        },
+        "shadow": false,
+        "state_hash": "091f895f8274b30f6a6d3d7a9158bab7ef8c1b41805b28597c76cc1f6a45ab12",
+        "status": "ok",
+        "usage": {
+          "cost_usd": 0.0,
+          "input_tokens": 881,
+          "output_tokens": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "created": "2026-10-08T20:09:54.298Z",
+      "namespace": "demo",
+      "kind": "admission_result",
+      "body": {
+        "candidate": {
+          "environment": {
+            "api": "v1"
+          },
+          "evidence": {
+            "check-1": "552d1a835f51ff2c66643c058e1f3bfacb1ddae0da31a5e433d06f4b515d463f",
+            "tool-1": "c6bdff12ca2d573709a99b9c44106984d4326bd81cf441918ce5ac98d0043ba1"
+          },
+          "exceptions": [],
+          "lesson": "For cursor-based pagination, verify that the loop condition checks for the presence of a next_cursor (e.g., `next_cursor is not null`) to prevent premature termination and ensure all pages are fetched.",
+          "namespace": "demo",
+          "preconditions": [
+            "The API uses cursor-based pagination returning a next_cursor field."
+          ],
+          "required_tools": [
+            "fetch"
+          ],
+          "trigger": "When interacting with a paginated API that returns a next_cursor, ensure the loop continues until next_cursor is null or absent to collect all records."
+        },
+        "candidate_hash": "792d4c18a25f6b7978495187ad8dd10af1d49daf10b39b56c97f7617cec769aa",
+        "reason": "uncertain_criteria",
+        "shadow": false,
+        "status": "pending"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "created": "2026-10-08T20:09:31.568Z",
+      "namespace": "demo",
+      "kind": "admission",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "73c7d9358f8d2f8aff004e7ffc629ef6e084a1bfe706f5c8a0ec0ebf40871c12",
+        "latency_ms": 5412.034499982838,
+        "model": "clef-flash",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "2558b5371558397e8ff3ac35d809b699381b5b4e47a524d78e10fa311f0d2835",
+        "scores": {
+          "actionable": 0.6298,
+          "supported": 0.7708,
+          "transferable": 0.9367
+        },
+        "shadow": false,
+        "state_hash": "fe413d7a7b52d342b3feb6830a047aea97a9e114b2d8e419de6d3d15f54988ed",
+        "status": "ok",
+        "usage": {
+          "cost_usd": 0.0,
+          "input_tokens": 837,
+          "output_tokens": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "created": "2026-10-08T20:09:31.569Z",
+      "namespace": "demo",
+      "kind": "admission_result",
+      "body": {
+        "candidate": {
+          "environment": {
+            "api": "v1"
+          },
+          "evidence": {
+            "check-1": "552d1a835f51ff2c66643c058e1f3bfacb1ddae0da31a5e433d06f4b515d463f",
+            "tool-1": "c6bdff12ca2d573709a99b9c44106984d4326bd81cf441918ce5ac98d0043ba1"
+          },
+          "exceptions": [
+            "Only the first page is requested."
+          ],
+          "lesson": "Follow next_cursor until it is null when all records are requested.",
+          "namespace": "demo",
+          "preconditions": [
+            "The API uses next_cursor; all records are requested."
+          ],
+          "required_tools": [
+            "fetch"
+          ],
+          "trigger": "Fetch all records with cursor pagination"
+        },
+        "candidate_hash": "28a8a306ab7a81b877506a22e8d212db9bd0d68674fcf272edbc5b95a4e7ed79",
+        "reason": "uncertain_criteria",
+        "shadow": false,
+        "status": "pending"
+      }
+    },
+    {
+      "id": 3,
+      "created": "2026-10-08T20:09:38.149Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 0,
+        "latency_ms": 0.8568750054109842,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "3504decd80eece7b26dc5acfb0096fba38cefaea1ff4d4a52dd730f98f6d4ec4",
+        "task_id": "heldout-all",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 4,
+      "created": "2026-10-08T20:09:41.718Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 0,
+        "latency_ms": 0.16450000111944973,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "9ac1f5e5c86e4f4e527aee656853ff8062bbad69bde7df8f099ba458bcbad751",
+        "task_id": "heldout-first",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 5,
+      "created": "2026-10-08T20:09:44.730Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 0,
+        "latency_ms": 0.6027499912306666,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "78518fa410ecaf523161d2c85bcb639c9cb7328ac30912eae4417fdc7d1fd120",
+        "task_id": "heldout-count",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 6,
+      "created": "2026-10-08T20:09:45.647Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 0,
+        "latency_ms": 0.15308300498872995,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "ab9d3d6edcea9c6f308d1e3e0cbb50ebf78db2a5f226204bfe072922617c51c8",
+        "task_id": "heldout-explain",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 7,
+      "created": "2026-10-08T20:09:46.698Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 0,
+        "latency_ms": 0.1666670141275972,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "106f0936b2017066180765e14f4acc71c9e7f705c4ef64f56c09856970b08422",
+        "task_id": "heldout-sample",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 8,
+      "created": "2026-10-08T20:09:48.135Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 0,
+        "latency_ms": 0.1272910158149898,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "c811446a7b860a3f6a76bd597b8db36a4d485a199a84af2ecf95158e21ee5478",
+        "task_id": "heldout-export",
+        "token_upper_bound": 0
+      }
+    }
+  ],
+  "latency_ms": 28160.199540987378,
+  "accuracy": {
+    "no_memory": 0.5,
+    "retrieval_only": 0.5,
+    "gated": 0.5
+  },
+  "negative_transfer_proxy": 0,
+  "note": "Selection labels only: no downstream solver success or causal benefit measured."
+}

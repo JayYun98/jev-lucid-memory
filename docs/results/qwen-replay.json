@@ -1,0 +1,537 @@
+{
+  "kind": "local smoke; six hand-authored contrasts, not a general benchmark",
+  "provider": "llm",
+  "model": "qwen3.6-35b-a3b-mxfp4",
+  "threshold": 0.8,
+  "external_api_charges_usd": 0,
+  "hardware_cost_usd": null,
+  "cases": [
+    {
+      "id": "all",
+      "expected": true,
+      "no_memory": false,
+      "retrieval_only": true,
+      "shared_candidate_score": 1.0,
+      "shared_candidate_replay": true,
+      "shared_candidate_usage": {
+        "input_tokens": 343,
+        "output_tokens": 12,
+        "cost_usd": null
+      },
+      "gated": true,
+      "latency_ms": 895.3479580231942
+    },
+    {
+      "id": "first",
+      "expected": false,
+      "no_memory": false,
+      "retrieval_only": true,
+      "shared_candidate_score": 0.0,
+      "shared_candidate_replay": false,
+      "shared_candidate_usage": {
+        "input_tokens": 346,
+        "output_tokens": 12,
+        "cost_usd": null
+      },
+      "gated": false,
+      "latency_ms": 759.7069579933304
+    },
+    {
+      "id": "count",
+      "expected": true,
+      "no_memory": false,
+      "retrieval_only": true,
+      "shared_candidate_score": 1.0,
+      "shared_candidate_replay": true,
+      "shared_candidate_usage": {
+        "input_tokens": 341,
+        "output_tokens": 12,
+        "cost_usd": null
+      },
+      "gated": true,
+      "latency_ms": 821.8822089838795
+    },
+    {
+      "id": "explain",
+      "expected": false,
+      "no_memory": false,
+      "retrieval_only": true,
+      "shared_candidate_score": 0.0,
+      "shared_candidate_replay": false,
+      "shared_candidate_usage": {
+        "input_tokens": 346,
+        "output_tokens": 12,
+        "cost_usd": null
+      },
+      "gated": false,
+      "latency_ms": 863.8592089992017
+    },
+    {
+      "id": "sample",
+      "expected": false,
+      "no_memory": false,
+      "retrieval_only": true,
+      "shared_candidate_score": 0.0,
+      "shared_candidate_replay": false,
+      "shared_candidate_usage": {
+        "input_tokens": 345,
+        "output_tokens": 12,
+        "cost_usd": null
+      },
+      "gated": false,
+      "latency_ms": 833.1261659914162
+    },
+    {
+      "id": "export",
+      "expected": true,
+      "no_memory": false,
+      "retrieval_only": true,
+      "shared_candidate_score": 1.0,
+      "shared_candidate_replay": true,
+      "shared_candidate_usage": {
+        "input_tokens": 343,
+        "output_tokens": 12,
+        "cost_usd": null
+      },
+      "gated": true,
+      "latency_ms": 670.0521250022575
+    }
+  ],
+  "admission": {
+    "status": "active",
+    "reason": "accepted",
+    "id": "be9646ecea100825897dafab6027bf8bc34b4c3048e4648d6ec8e7fe1ce8691c",
+    "revision": 1,
+    "duplicate": false,
+    "validation": "source",
+    "shadow": false,
+    "candidate_hash": "28a8a306ab7a81b877506a22e8d212db9bd0d68674fcf272edbc5b95a4e7ed79"
+  },
+  "sleep": {
+    "reflected": true,
+    "results": [
+      {
+        "status": "active",
+        "reason": "accepted",
+        "id": "108a09f367a15b38b91a4dbadbfd1f5d3608ca611605926cfc66cadb8471bbd4",
+        "revision": 1,
+        "duplicate": false,
+        "validation": "source",
+        "shadow": false,
+        "candidate_hash": "d8111737d0051f30670c8a0123d52d27fd543dfa222a765b55105d219551f6af"
+      }
+    ]
+  },
+  "sleep_events": [
+    {
+      "id": 1,
+      "created": "2026-10-08T20:11:46.794Z",
+      "namespace": "demo",
+      "kind": "reflection",
+      "body": {
+        "count": 1,
+        "latency_ms": 5597.395124990726,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "status": "ok",
+        "trace_hash": "4767e553009e393bad0a46d26c97a29ab45bc2957cb106cb4b9b33bedbce865c",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 677,
+          "output_tokens": 205
+        }
+      }
+    },
+    {
+      "id": 2,
+      "created": "2026-10-08T20:11:47.907Z",
+      "namespace": "demo",
+      "kind": "admission",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "73c7d9358f8d2f8aff004e7ffc629ef6e084a1bfe706f5c8a0ec0ebf40871c12",
+        "latency_ms": 1112.954375013942,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "2558b5371558397e8ff3ac35d809b699381b5b4e47a524d78e10fa311f0d2835",
+        "scores": {
+          "actionable": 1.0,
+          "supported": 1.0,
+          "transferable": 1.0
+        },
+        "shadow": false,
+        "state_hash": "d12618e021eb1841d906195f3828519d43c1f23d5384da20e7d1c54ea85ec81d",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 596,
+          "output_tokens": 29
+        }
+      }
+    },
+    {
+      "id": 3,
+      "created": "2026-10-08T20:11:47.907Z",
+      "namespace": "demo",
+      "kind": "admission_result",
+      "body": {
+        "candidate": {
+          "environment": {
+            "api": "v1"
+          },
+          "evidence": {
+            "check-1": "552d1a835f51ff2c66643c058e1f3bfacb1ddae0da31a5e433d06f4b515d463f",
+            "tool-1": "c6bdff12ca2d573709a99b9c44106984d4326bd81cf441918ce5ac98d0043ba1"
+          },
+          "exceptions": [],
+          "lesson": "For cursor-based pagination, verify that the loop condition checks for the presence of a next_cursor (e.g., `next_cursor is not null`) rather than relying on a fixed page count or a 'has_more' boolean, as the cursor value itself indicates whether more data exists.",
+          "namespace": "demo",
+          "preconditions": [
+            "The API uses cursor-based pagination returning a next_cursor field."
+          ],
+          "required_tools": [
+            "fetch"
+          ],
+          "trigger": "When interacting with a paginated API that returns a next_cursor, ensure the loop continues until next_cursor is null or absent to collect all records."
+        },
+        "candidate_hash": "d8111737d0051f30670c8a0123d52d27fd543dfa222a765b55105d219551f6af",
+        "duplicate": false,
+        "id": "108a09f367a15b38b91a4dbadbfd1f5d3608ca611605926cfc66cadb8471bbd4",
+        "reason": "accepted",
+        "revision": 1,
+        "shadow": false,
+        "status": "active",
+        "validation": "source"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "created": "2026-10-08T20:11:29.133Z",
+      "namespace": "demo",
+      "kind": "admission",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "73c7d9358f8d2f8aff004e7ffc629ef6e084a1bfe706f5c8a0ec0ebf40871c12",
+        "latency_ms": 1833.803582994733,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "2558b5371558397e8ff3ac35d809b699381b5b4e47a524d78e10fa311f0d2835",
+        "scores": {
+          "actionable": 1.0,
+          "supported": 1.0,
+          "transferable": 1.0
+        },
+        "shadow": false,
+        "state_hash": "fe413d7a7b52d342b3feb6830a047aea97a9e114b2d8e419de6d3d15f54988ed",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 536,
+          "output_tokens": 26
+        }
+      }
+    },
+    {
+      "id": 2,
+      "created": "2026-10-08T20:11:29.134Z",
+      "namespace": "demo",
+      "kind": "admission_result",
+      "body": {
+        "candidate": {
+          "environment": {
+            "api": "v1"
+          },
+          "evidence": {
+            "check-1": "552d1a835f51ff2c66643c058e1f3bfacb1ddae0da31a5e433d06f4b515d463f",
+            "tool-1": "c6bdff12ca2d573709a99b9c44106984d4326bd81cf441918ce5ac98d0043ba1"
+          },
+          "exceptions": [
+            "Only the first page is requested."
+          ],
+          "lesson": "Follow next_cursor until it is null when all records are requested.",
+          "namespace": "demo",
+          "preconditions": [
+            "The API uses next_cursor; all records are requested."
+          ],
+          "required_tools": [
+            "fetch"
+          ],
+          "trigger": "Fetch all records with cursor pagination"
+        },
+        "candidate_hash": "28a8a306ab7a81b877506a22e8d212db9bd0d68674fcf272edbc5b95a4e7ed79",
+        "duplicate": false,
+        "id": "be9646ecea100825897dafab6027bf8bc34b4c3048e4648d6ec8e7fe1ce8691c",
+        "reason": "accepted",
+        "revision": 1,
+        "shadow": false,
+        "status": "active",
+        "validation": "source"
+      }
+    },
+    {
+      "id": 3,
+      "created": "2026-10-08T20:11:32.344Z",
+      "namespace": "demo",
+      "kind": "retrieval",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "0f26139bd949ad220020974954aefc6fe22c17b10c182f52fb39bc6e674fcebd",
+        "latency_ms": 894.9463750177529,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "675a2a3221adda0fc1d158cdb768cf3fecca7f2c3c5ddda7a053a8dc53c33e32",
+        "scores": {
+          "applicable": 1.0
+        },
+        "shadow": false,
+        "state_hash": "97106a046e28130d97723985285c570bc0c8b2b08be0949fb6817390d60e325c",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 343,
+          "output_tokens": 12
+        }
+      }
+    },
+    {
+      "id": 4,
+      "created": "2026-10-08T20:11:32.344Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 1,
+        "latency_ms": 895.3479580231942,
+        "selected": [
+          {
+            "id": "be9646ecea100825897dafab6027bf8bc34b4c3048e4648d6ec8e7fe1ce8691c",
+            "revision": 1
+          }
+        ],
+        "shadow": false,
+        "task_hash": "3504decd80eece7b26dc5acfb0096fba38cefaea1ff4d4a52dd730f98f6d4ec4",
+        "task_id": "heldout-all",
+        "token_upper_bound": 433
+      }
+    },
+    {
+      "id": 5,
+      "created": "2026-10-08T20:11:33.660Z",
+      "namespace": "demo",
+      "kind": "retrieval",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "0f26139bd949ad220020974954aefc6fe22c17b10c182f52fb39bc6e674fcebd",
+        "latency_ms": 759.3931249866728,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "675a2a3221adda0fc1d158cdb768cf3fecca7f2c3c5ddda7a053a8dc53c33e32",
+        "scores": {
+          "applicable": 0.0
+        },
+        "shadow": false,
+        "state_hash": "eeead358670ca6db23719c0376129a4d47fbe37c4144eb9c6f901145ef869521",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 346,
+          "output_tokens": 12
+        }
+      }
+    },
+    {
+      "id": 6,
+      "created": "2026-10-08T20:11:33.660Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 1,
+        "latency_ms": 759.7069579933304,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "9ac1f5e5c86e4f4e527aee656853ff8062bbad69bde7df8f099ba458bcbad751",
+        "task_id": "heldout-first",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 7,
+      "created": "2026-10-08T20:11:35.567Z",
+      "namespace": "demo",
+      "kind": "retrieval",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "0f26139bd949ad220020974954aefc6fe22c17b10c182f52fb39bc6e674fcebd",
+        "latency_ms": 821.5695419930853,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "675a2a3221adda0fc1d158cdb768cf3fecca7f2c3c5ddda7a053a8dc53c33e32",
+        "scores": {
+          "applicable": 1.0
+        },
+        "shadow": false,
+        "state_hash": "e5524c841ac0d4f2e4bb64bad03c5e2215700cb55d6f578c34fbcb824402ce9e",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 341,
+          "output_tokens": 12
+        }
+      }
+    },
+    {
+      "id": 8,
+      "created": "2026-10-08T20:11:35.567Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 1,
+        "latency_ms": 821.8822089838795,
+        "selected": [
+          {
+            "id": "be9646ecea100825897dafab6027bf8bc34b4c3048e4648d6ec8e7fe1ce8691c",
+            "revision": 1
+          }
+        ],
+        "shadow": false,
+        "task_hash": "78518fa410ecaf523161d2c85bcb639c9cb7328ac30912eae4417fdc7d1fd120",
+        "task_id": "heldout-count",
+        "token_upper_bound": 433
+      }
+    },
+    {
+      "id": 9,
+      "created": "2026-10-08T20:11:37.494Z",
+      "namespace": "demo",
+      "kind": "retrieval",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "0f26139bd949ad220020974954aefc6fe22c17b10c182f52fb39bc6e674fcebd",
+        "latency_ms": 863.570040994091,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "675a2a3221adda0fc1d158cdb768cf3fecca7f2c3c5ddda7a053a8dc53c33e32",
+        "scores": {
+          "applicable": 0.0
+        },
+        "shadow": false,
+        "state_hash": "dc7f34bf3de5c821523145e1c197e49c2a74a920cdd6fc2bfe42708a63f535ee",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 346,
+          "output_tokens": 12
+        }
+      }
+    },
+    {
+      "id": 10,
+      "created": "2026-10-08T20:11:37.494Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 1,
+        "latency_ms": 863.8592089992017,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "ab9d3d6edcea9c6f308d1e3e0cbb50ebf78db2a5f226204bfe072922617c51c8",
+        "task_id": "heldout-explain",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 11,
+      "created": "2026-10-08T20:11:39.454Z",
+      "namespace": "demo",
+      "kind": "retrieval",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "0f26139bd949ad220020974954aefc6fe22c17b10c182f52fb39bc6e674fcebd",
+        "latency_ms": 832.836290996056,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "675a2a3221adda0fc1d158cdb768cf3fecca7f2c3c5ddda7a053a8dc53c33e32",
+        "scores": {
+          "applicable": 0.0
+        },
+        "shadow": false,
+        "state_hash": "38166d8dce40721529ce9861a904b01a6f124f4ff4d7ce635ff3669bdf687178",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 345,
+          "output_tokens": 12
+        }
+      }
+    },
+    {
+      "id": 12,
+      "created": "2026-10-08T20:11:39.454Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 1,
+        "latency_ms": 833.1261659914162,
+        "selected": [],
+        "shadow": false,
+        "task_hash": "106f0936b2017066180765e14f4acc71c9e7f705c4ef64f56c09856970b08422",
+        "task_id": "heldout-sample",
+        "token_upper_bound": 0
+      }
+    },
+    {
+      "id": 13,
+      "created": "2026-10-08T20:11:41.193Z",
+      "namespace": "demo",
+      "kind": "retrieval",
+      "body": {
+        "attempt": 1,
+        "instruction_hash": "0f26139bd949ad220020974954aefc6fe22c17b10c182f52fb39bc6e674fcebd",
+        "latency_ms": 669.7391250054352,
+        "model": "qwen3.6-35b-a3b-mxfp4",
+        "policy_hash": "54cf7181399cf4ffa83698d1f39d9c5b43bbab46af104126507830e8a9a673d2",
+        "schema_hash": "675a2a3221adda0fc1d158cdb768cf3fecca7f2c3c5ddda7a053a8dc53c33e32",
+        "scores": {
+          "applicable": 1.0
+        },
+        "shadow": false,
+        "state_hash": "b62f0505802e58d9100c7c486ae4a8b2acb3811b2adc5417046c70724eb59a48",
+        "status": "ok",
+        "usage": {
+          "cost_usd": null,
+          "input_tokens": 343,
+          "output_tokens": 12
+        }
+      }
+    },
+    {
+      "id": 14,
+      "created": "2026-10-08T20:11:41.194Z",
+      "namespace": "demo",
+      "kind": "wake",
+      "body": {
+        "generation": 1,
+        "latency_ms": 670.0521250022575,
+        "selected": [
+          {
+            "id": "be9646ecea100825897dafab6027bf8bc34b4c3048e4648d6ec8e7fe1ce8691c",
+            "revision": 1
+          }
+        ],
+        "shadow": false,
+        "task_hash": "c811446a7b860a3f6a76bd597b8db36a4d485a199a84af2ecf95158e21ee5478",
+        "task_id": "heldout-export",
+        "token_upper_bound": 433
+      }
+    }
+  ],
+  "latency_ms": 20618.500916985795,
+  "accuracy": {
+    "no_memory": 0.5,
+    "retrieval_only": 0.5,
+    "gated": 1.0,
+    "shared_candidate_replay": 1.0
+  },
+  "negative_transfer_proxy": 0,
+  "note": "Selection labels only: no downstream solver success or causal benefit measured."
+}

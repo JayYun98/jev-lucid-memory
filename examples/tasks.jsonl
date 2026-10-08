@@ -1,0 +1,2 @@
+{"environment":{"api":"v1"},"id":"new-task","namespace":"demo","text":"Fetch all records with cursor pagination","tools":["fetch"]}
+{"environment":{"api":"v1"},"id":"first-page","namespace":"demo","text":"Fetch only the first page of the cursor pagination API.","tools":["fetch"]}
