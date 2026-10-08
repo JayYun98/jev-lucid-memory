@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+.env
+*.db
+*.db-*
+*.sqlite*
+local/
+*.pem
+.DS_Store
+*.safetensors
+*.gguf
+*.pt

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jev-memory"
+version = "0.1.0"
+description = "Evidence-backed wake–sleep memory with Jev decision gates."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["pydantic>=2.10,<3", "httpx>=0.28,<1"]
+
+[project.optional-dependencies]
+jev = ["typesafe-sdk>=0.7.2,<0.8"]
+serve = ["torch>=2.11,<3", "torchvision>=0.26,<1", "transformers>=5.10.2,<6", "accelerate>=1.15,<2", "pillow>=12,<13", "fastapi>=0.135,<1", "uvicorn>=0.40,<1"]
+
+[project.scripts]
+jev-memory = "jev_memory.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "pytest-cov>=6", "ruff>=0.12", "build>=1", "python-dotenv>=1", "typesafe-sdk>=0.7.2,<0.8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
