@@ -1,0 +1,28 @@
+name: jev-memory
+version: 0.1.0
+description: Evidence-backed Jev memory selection before the model call.
+author: Jay Yun
+license: MIT
+requires_hermes: ">=0.21"
+kind: standalone
+provides_tools: []
+provides_hooks: [pre_llm_call]
+config_schema:
+  enabled:
+    type: bool
+  shadow:
+    type: bool
+  namespace:
+    type: str
+  database:
+    type: str
+  provider:
+    type: str
+  decision_model:
+    type: str
+  endpoint:
+    type: str
+  tools:
+    type: list
+  environment:
+    type: dict
