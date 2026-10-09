@@ -5,7 +5,7 @@
 An experimental memory layer for AI agents. A local LLM writes lessons.
 A **decision model**, such as Jev, judges what to keep and when to use it.
 
-[Try it](#try-it) · [Results](docs/EVALUATION.md) · [Design](docs/CONCEPT.md)
+[Try it](#try-it) · [Results](docs/EVALUATION.md) · [Design](docs/CONCEPT.md) · [Research & roadmap](docs/RESEARCH.md)
 
 ![Wake checks lessons before use; Sleep drafts and assesses lessons before saving them.](docs/assets/jev-memory-wake-sleep-v2.png)
 
@@ -43,8 +43,6 @@ whether their conditions fit the new task. The host agent receives the selected 
 The host runs tasks and supplies observations. Sleep runs when called; it is not an
 automatic overnight process. Model weights do not change.
 
-
-
 ## What it does
 
 - Separates reflection triggers, lesson admission and task applicability.
@@ -53,7 +51,6 @@ automatic overnight process. Model weights do not change.
 - Merges duplicate evidence, preserves immutable revisions and detects concurrent changes.
 - Starts in **shadow mode**: records decisions without activating or injecting lessons.
 - Includes a CLI, an opt-in Hermes hook and reproducible local evaluation scripts.
-
 
 ## The principle
 
@@ -73,7 +70,7 @@ They are related ideas, with different jobs:
 | **DreamCoder-style dreaming** | Generated practice examples used for learning | No. |
 
 [Jev Wiki](https://github.com/JayYun98/jev-wiki) maintains source-backed Markdown knowledge.
-Jev Memory applies the same **writer–decision model–code** separation to task experience.
+Jev Lucid Memory applies the same **writer–decision model–code** separation to task experience.
 Both are independent projects; Wiki integration is not implemented.
 [Read the comparison and sources →](docs/CONCEPT.md)
 
@@ -177,12 +174,10 @@ uv run jev-memory --provider typesafe admit examples/admission.jsonl
 Explicit cloud selection sends the relevant task/observations to that provider.
 Reflection remains local unless `sleep --cloud-writer --writer-model ...` is specified.
 
-
 </details>
 
 <details>
 <summary>Reproduce the verification</summary>
-
 
 ```bash
 uv run pytest --cov=jev_memory
@@ -200,11 +195,9 @@ See [evaluation protocol and results](docs/EVALUATION.md). Offline contract test
 live local model results and downstream task success are reported separately.
 A six-case smoke result is not evidence of general benchmark performance.
 
-
 </details>
 
 ## Boundaries
-
 
 [Hermes setup](docs/HERMES.md) · [Design decisions](docs/IMPLEMENTATION.md) ·
 [Security](SECURITY.md)
@@ -217,7 +210,6 @@ identity, not truth: the host must supply trustworthy observations and verifiers
 Episode text and candidate lessons are stored locally, including in shadow mode.
 Use a private database directory, redact sensitive traces, and treat all retrieved
 advice as subordinate to current user and host instructions.
-
 
 ## Related work
 
