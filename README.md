@@ -2,23 +2,100 @@
 
 **Remember useful experience. Apply it only when the conditions fit.**
 
-A small, host-independent wake–sleep memory core for agents. A local LLM writes
-conditional lessons; **Clef-Flash or Jev** decides what to keep and when to use it.
-SQLite preserves evidence, revisions and decision receipts.
+Jev Memory explores a simple question: **can an agent turn experience into useful
+conditional advice, then recognize when that advice should—and should not—be reused?**
 
-Local inference is the default. No API key is required. Jev is an optional provider,
-not a runtime dependency for local use.
+A local LLM proposes lessons from supplied task observations. **Clef-Flash or Jev**
+judges whether those lessons are supported and applicable. Code preserves evidence,
+versions and scope in SQLite. Model weights remain unchanged.
+
+This is an executable **research proof of concept**. The memory mechanics run; useful
+learning and improved task success are still hypotheses under evaluation.
+Local inference is the default, and Jev is an optional provider.
+
+[Concept & philosophy](docs/CONCEPT.md) · [Quick start](#quick-start) ·
+[Observed results](docs/EVALUATION.md) · [Re-verification](docs/REVERIFICATION.md)
+
+## The idea: experience → conditional memory → informed action
+
+An agent can complete a task without retaining a reusable lesson. It can also remember
+an overly broad lesson and apply it where it does not belong. We study both decisions:
+**what is worth remembering, and when is it appropriate to use it?**
+
+For example, a useful pagination lesson would be:
+
+> When **all records** are requested from a cursor-paginated API, follow the cursor
+> until completion. Do not extend a request for **only the first page**.
+
+That is an intended lesson, not a claim that the current reflector always produces it.
+[The latest local check](docs/REVERIFICATION.md#fresh-real-inference) produced broader
+advice and failed to preserve this distinction.
+
+### Wake and Sleep in this project
+
+| Phase | Question | Current implementation |
+|---|---|---|
+| **Wake** | Which past lessons fit this task? | Scope filters → lexical shortlist → applicability decisions → bounded context |
+| **Sleep** | What should this experience teach future tasks? | Supplied episode → optional reflection trigger → LLM lesson draft → admission decision → versioned memory |
+
+The host solves the actual task and supplies observations. The core does not collect
+all host activity automatically. “Sleep” means a separate reflection step; it is not
+an always-running background service or an overnight scheduler.
 
 ```mermaid
 flowchart LR
-    E[Episode + observations] --> R[Local reflector]
-    R --> A[Admission gate]
-    A --> M[(Versioned memory)]
-    T[New task] --> S[Scope + lexical shortlist]
-    M --> S
-    S --> G[Applicability gate]
-    G --> C[Bounded context for the solver]
+    E[Host-supplied observations] --> R[Sleep: draft lessons]
+    R --> A[Judge evidence and scope]
+    A --> M[(Conditional memory)]
+    T[New task] --> W[Wake: retrieve and judge applicability]
+    M --> W
+    W --> H[Context for host solver]
 ```
+
+### Is this Dreaming?
+
+**Wake–Sleep names the phase structure; Dreaming can name a method used within Sleep.**
+The terms are not interchangeable, and different projects use them differently.
+In [DreamCoder](https://github.com/ellisk42/ec/blob/master/dreamcoder/dreaming.py),
+generated program/task examples contribute to training a recognition model; its
+[main loop](https://github.com/ellisk42/ec/blob/master/dreamcoder/dreamcoder.py) also
+learns program-library abstractions. Our Sleep reflects on existing observations.
+It does not generate dream tasks, train a recognition network or discover reusable functions.
+This is an analogy to the phase separation, not a reproduction of DreamCoder.
+
+### Where does LLM Wiki fit?
+
+[LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) describes
+maintaining an interconnected knowledge base from sources. Jev Memory focuses on
+conditional advice extracted from task experience. A wiki can also contain procedures;
+the difference here is the workflow and verification target, not the file format.
+
+| Approach | Main artifact | Central question | Relationship here |
+|---|---|---|---|
+| LLM Wiki / Jev Wiki | Source-backed knowledge pages | What do the sources say, and how do they connect? | Complementary knowledge layer; no integration yet |
+| Jev Memory | Lessons with conditions, exceptions and evidence | Should this experience guide the current action? | Implemented as an experimental memory core |
+| DreamCoder | Programs, learned library and recognition model | Can learned structure improve program search? | Research inspiration; not implemented |
+
+[Jev Wiki](https://github.com/JayYun98/jev-wiki) is our separate, currently private
+project. We reuse its **division of responsibility**, not its code or storage:
+**the LLM writes, the decision model judges, deterministic code commits.**
+There is no bundled wiki, page ingestion, Markdown synchronization or shared index.
+A future host could consult both systems; that is a proposed composition, not a current feature.
+
+## Philosophy
+
+- **Preserve the reason and the boundary.** A lesson needs supporting observations,
+  preconditions and exceptions; a polished summary alone is insufficient.
+- **Separate creation from judgment.** A writer can propose advice without granting
+  itself authority to store or apply it. The judge is still fallible.
+- **Treat memory as advice.** Retrieved experience cannot override the current request.
+  Abstaining is preferable to forcing an uncertain match.
+- **Measure behavior, not memory volume.** Storage and retrieval are intermediate
+  mechanics. The goal is better task outcomes without harmful transfer; we have not
+  established that benefit yet.
+
+See [the fuller concept note](docs/CONCEPT.md) for the proposed Wiki relationship,
+research boundaries and what would count as evidence that the idea works.
 
 ## What it does
 
