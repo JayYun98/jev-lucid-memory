@@ -93,3 +93,43 @@ def test_cli_shadow_and_apply(tmp_path, monkeypatch, gate, episode, candidate, c
         )
         == 0
     )
+
+
+def test_sleep_reports_trigger_transport_failure(tmp_path, monkeypatch, episode, capsys):
+    from jev_memory import cli
+
+    class Broken:
+        model = "offline"
+
+        def decide(self, *args):
+            raise ConnectionError("private diagnostic")
+
+    monkeypatch.setattr(cli, "LocalGate", lambda **kw: Broken())
+    source = tmp_path / "episode.jsonl"
+    source.write_text(canonical(episode))
+    assert main(["--db", str(tmp_path / "db"), "sleep", str(source)]) == 1
+    assert json.loads(capsys.readouterr().out)["error"] == "provider_error"
+
+
+def test_sleep_reports_nested_admission_failure(tmp_path, monkeypatch, episode, candidate, capsys):
+    from jev_memory import cli
+    from jev_memory.models import Usage
+
+    class Broken:
+        model = "offline"
+
+        def decide(self, *args):
+            raise ConnectionError("private diagnostic")
+
+    class Writer:
+        model = "test"
+
+        def propose(self, ep):
+            return [candidate], Usage()
+
+    monkeypatch.setattr(cli, "LocalGate", lambda **kw: Broken())
+    monkeypatch.setattr(cli, "LocalWriter", lambda **kw: Writer())
+    source = tmp_path / "episode.jsonl"
+    source.write_text(canonical(episode))
+    assert main(["--db", str(tmp_path / "db"), "sleep", str(source), "--no-trigger"]) == 1
+    assert json.loads(capsys.readouterr().out)["results"][0]["reason"] == "provider_error"

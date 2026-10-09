@@ -74,6 +74,7 @@ def token_upper_bound(text):
 class Memory:
     def __init__(self, store: Store, gate: Gate, policy: Policy | None = None, *, shadow=True):
         self.store, self.gate, self.policy, self.shadow = store, gate, policy or Policy(), shadow
+        self._decision_errors = 0
 
     def _decide(self, namespace, kind, state, questions):
         start = time.perf_counter()
@@ -93,6 +94,7 @@ class Memory:
             audit.update(status="ok", **decision.model_dump())
             return decision
         except Exception as exc:
+            self._decision_errors += 1
             audit.update(status="error", error=type(exc).__name__)
             return None
         finally:
@@ -210,8 +212,12 @@ class Memory:
 
     def sleep(self, episode, writer, *, trigger=True):
         self.store.episode(episode)
+        errors_before = self._decision_errors
         if trigger and not self.should_reflect(episode):
-            return {"reflected": False, "results": []}
+            result = {"reflected": False, "results": []}
+            if self._decision_errors > errors_before:
+                result["error"] = "provider_error"
+            return result
         start = time.perf_counter()
         try:
             candidates, usage = writer.propose(episode)
@@ -255,6 +261,7 @@ class Memory:
         )
 
     def wake(self, task: Task):
+        errors_before = self._decision_errors
         start = time.perf_counter()
         generation = self.store.generation(task.namespace)
         candidates = self.store.search(task.namespace, task.text, self.policy.shortlist)
@@ -276,6 +283,8 @@ class Memory:
             "token_upper_bound": token_upper_bound(context),
             "latency_ms": (time.perf_counter() - start) * 1000,
         }
+        if self._decision_errors > errors_before:
+            result["error"] = "provider_error"
         self.store.event(
             task.namespace,
             "wake",

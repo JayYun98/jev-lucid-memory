@@ -137,7 +137,10 @@ def main(argv=None):
                 else:
                     result = memory.sleep(record, writer, trigger=not args.no_trigger)
                 failed = (
-                    failed or bool(result.get("error")) or result.get("reason") == "provider_error"
+                    failed
+                    or bool(result.get("error"))
+                    or result.get("reason") == "provider_error"
+                    or any(r.get("reason") == "provider_error" for r in result.get("results", []))
                 )
                 print(canonical(result))
             return 1 if failed else 0

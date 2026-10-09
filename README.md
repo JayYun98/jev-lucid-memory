@@ -29,6 +29,9 @@ flowchart LR
 - Starts in **shadow mode**: records decisions without activating or injecting lessons.
 - Includes a CLI, an opt-in Hermes hook and reproducible local evaluation scripts.
 
+This is an executable **proof of concept**, not a production-ready service.
+See [scope and re-verification](docs/REVERIFICATION.md).
+
 This is an experimental **lesson-memory** release. It does not train model weights,
 execute learned code skills, or implement DreamCoder/Stitch abstraction learning.
 

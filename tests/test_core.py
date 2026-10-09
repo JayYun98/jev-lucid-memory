@@ -247,3 +247,17 @@ def test_gate_thresholds_can_be_calibrated_separately(store, episode, candidate,
     )
     assert memory.admit_lesson(episode, candidate)["status"] == "active"
     assert memory.wake(task)["selected"] == []
+
+
+def test_wake_reports_failure_without_injecting(store, gate, episode, candidate, task):
+    Memory(store, gate, shadow=False).admit_lesson(episode, candidate)
+
+    class Broken:
+        model = "offline"
+
+        def decide(self, *args):
+            raise ConnectionError("private diagnostic")
+
+    result = Memory(store, Broken(), shadow=False).wake(task)
+    assert result["context"] == ""
+    assert result["error"] == "provider_error"
