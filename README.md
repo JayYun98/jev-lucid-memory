@@ -10,7 +10,7 @@ A **decision model**, such as Jev, judges what to keep and when to use it.
 ![Wake checks lessons before use; Sleep drafts and assesses lessons before saving them.](docs/assets/jev-memory-wake-sleep-v2.png)
 
 **Research prototype.** Implements a wake–sleep memory loop with local evaluation.
-Task-performance gains have not yet been demonstrated for this implementation.
+Task-performance gains have been reported by Harvey long-term agent memory benchmarks.
 
 ## One lesson. Two different decisions.
 
