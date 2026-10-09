@@ -80,6 +80,8 @@ class Episode(Record):
 
 class Candidate(Record):
     namespace: Identifier
+    kind: Literal["checklist", "practice"] = "practice"
+    work_kind: Literal["analysis", "drafting", "review", "general"] = "general"
     trigger: Text
     lesson: Text
     preconditions: list[Text] = Field(min_length=1, max_length=16)
@@ -90,12 +92,20 @@ class Candidate(Record):
 
     @property
     def identity(self):
-        return digest(self.model_dump(exclude={"evidence"}))
+        # Preserve identities of lessons stored before kind/work_kind existed.
+        omitted = {"evidence"}
+        if self.kind == "practice":
+            omitted.add("kind")
+        if self.work_kind == "general":
+            omitted.add("work_kind")
+        return digest(self.model_dump(exclude=omitted))
 
 
 class Draft(Record):
     """Writer-owned prose only. Namespace and evidence hashes are host-owned."""
 
+    kind: Literal["checklist", "practice"] = "practice"
+    work_kind: Literal["analysis", "drafting", "review", "general"] = "general"
     trigger: Text
     lesson: Text
     preconditions: list[Text] = Field(min_length=1, max_length=16)

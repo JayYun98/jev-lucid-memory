@@ -1,4 +1,4 @@
-"""JSON in, JSON out. Shadow is the default; writes require --apply."""
+"""JSON in, JSON out. Shadow records local traces; active memory changes require --apply."""
 
 from __future__ import annotations
 
@@ -7,10 +7,12 @@ import json
 import sys
 from pathlib import Path
 
-from pydantic import ValidationError
+from pydantic import TypeAdapter, ValidationError
 
+from .batch_writer import BatchWriter
+from .consolidation import ConsolidationPolicy, Consolidator, GradedEpisode
 from .core import Memory
-from .models import Candidate, Episode, Policy, Task, canonical
+from .models import Candidate, Episode, Identifier, Policy, Task, canonical
 from .providers import (
     LLMGate,
     LocalGate,
@@ -59,6 +61,18 @@ def parser():
     for name in ("list", "audit"):
         cmd = sub.add_parser(name)
         cmd.add_argument("--namespace", required=True)
+    cmd = sub.add_parser("batch-sleep", help="Review a JSONL batch of graded episodes")
+    cmd.add_argument("file", type=Path)
+    cmd.add_argument("--cycle-id", required=True)
+    _batch_writer_args(cmd)
+    cmd.add_argument("--consolidation-policy", type=Path)
+    cmd = sub.add_parser("queue", help="List consolidation queue entries")
+    cmd.add_argument("--namespace", required=True)
+    cmd = sub.add_parser("retry", help="Retry a queued consolidation cycle")
+    cmd.add_argument("id", type=int)
+    cmd.add_argument("--namespace", required=True)
+    _batch_writer_args(cmd)
+    cmd.add_argument("--consolidation-policy", type=Path)
     cmd = sub.add_parser("archive")
     cmd.add_argument("--namespace", required=True)
     cmd.add_argument("id")
@@ -66,11 +80,104 @@ def parser():
     return p
 
 
+def _batch_writer_args(cmd):
+    cmd.add_argument("--writer-model", default="local")
+    cmd.add_argument("--writer-endpoint", default="http://127.0.0.1:8123/v1/chat/completions")
+    cmd.add_argument("--cloud-writer", action="store_true")
+
+
+def _gate(args, p):
+    cls = {
+        "openrouter": OpenRouterGate,
+        "typesafe": TypeSafeGate,
+        "llm": LLMGate,
+        "local": LocalGate,
+        "local-llm": LocalLLMGate,
+    }[args.provider]
+    options = {"model": args.model} if args.model else {}
+    if args.endpoint:
+        if not args.provider.startswith("local"):
+            p.error("--endpoint is only for local providers")
+        options["endpoint"] = args.endpoint
+    return cls(**options)
+
+
+def _batch_result_code(result):
+    return (
+        1 if result.get("reason") in {"provider_error", "reviewer_error", "invalid_proposal"} else 0
+    )
+
+
+def _batch_command(args, p, store):
+    if args.command == "queue":
+        TypeAdapter(Identifier).validate_python(args.namespace)
+        print(canonical(Consolidator(store, None).queue(args.namespace)))
+        return 0
+    policy = (
+        ConsolidationPolicy.model_validate_json(args.consolidation_policy.read_text())
+        if args.consolidation_policy
+        else ConsolidationPolicy()
+    )
+    if args.command == "batch-sleep":
+        # Parse the entire file before constructing providers or calling the model.
+        TypeAdapter(Identifier).validate_python(args.cycle_id)
+        episodes = [
+            GradedEpisode.model_validate(json.loads(line))
+            for line in args.file.read_text().splitlines()
+            if line.strip()
+        ]
+        if (
+            not episodes
+            or len({e.episode.id for e in episodes}) != len(episodes)
+            or any(e.episode.namespace != episodes[0].episode.namespace for e in episodes)
+        ):
+            raise ValueError("empty, duplicate, or mixed-namespace batch")
+    else:
+        TypeAdapter(Identifier).validate_python(args.namespace)
+        if args.id < 1:
+            raise ValueError("invalid queue ID")
+        row = (
+            store.db.execute(
+                "SELECT namespace,status FROM consolidation_queue WHERE id=?", (args.id,)
+            ).fetchone()
+            if _has_queue(store)
+            else None
+        )
+        if row is None or row["namespace"] != args.namespace or row["status"] == "resolved":
+            raise ValueError("queue entry unavailable")
+    gate = _gate(args, p)
+    writer = (
+        OpenRouterWriter(model=args.writer_model)
+        if args.cloud_writer
+        else LocalWriter(endpoint=args.writer_endpoint, model=args.writer_model)
+    )
+    consolidator = Consolidator(store, gate, policy, shadow=not args.apply)
+    reviewer = BatchWriter(writer)
+    result = (
+        consolidator.run(episodes, reviewer, args.cycle_id)
+        if args.command == "batch-sleep"
+        else consolidator.retry(args.id, reviewer)
+    )
+    print(canonical(result))
+    return _batch_result_code(result)
+
+
+def _has_queue(store):
+    return (
+        store.db.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='consolidation_queue'"
+        ).fetchone()
+        is not None
+    )
+
+
 def main(argv=None):
     p = parser()
     args = p.parse_args(argv)
     try:
         with Store(args.db) as store:
+            if args.command in {"batch-sleep", "queue", "retry"}:
+                return _batch_command(args, p, store)
             if args.command in {"list", "audit", "archive"}:
                 if args.command == "archive":
                     if not args.apply:
@@ -86,19 +193,7 @@ def main(argv=None):
                     )
                 )
                 return 0
-            cls = {
-                "openrouter": OpenRouterGate,
-                "typesafe": TypeSafeGate,
-                "llm": LLMGate,
-                "local": LocalGate,
-                "local-llm": LocalLLMGate,
-            }[args.provider]
-            options = {"model": args.model} if args.model else {}
-            if args.endpoint:
-                if not args.provider.startswith("local"):
-                    p.error("--endpoint is only for local providers")
-                options["endpoint"] = args.endpoint
-            gate = cls(**options)
+            gate = _gate(args, p)
             policy = (
                 Policy.model_validate_json(args.policy.read_text()) if args.policy else Policy()
             )
