@@ -1,103 +1,49 @@
 # Jev Memory
 
-**Remember useful experience. Apply it only when the conditions fit.**
+### Turn task experience into lessons. Check when to use them.
 
-![Jev Memory: Wake selects applicable lessons; Sleep drafts and assesses evidence-backed lessons for versioned memory.](docs/assets/jev-memory-wake-sleep.png)
+An experimental memory layer for AI agents. A local LLM writes lessons.
+A **decision model**, such as Jev, judges what to keep and when to use it.
 
-Jev Memory explores a simple question: **can an agent turn experience into useful
-conditional advice, then recognize when that advice should—and should not—be reused?**
+[Try it](#try-it) · [Results](docs/EVALUATION.md) · [Design](docs/CONCEPT.md)
 
-A local LLM proposes lessons from supplied task observations. **Clef-Flash or Jev**
-judges whether those lessons are supported and applicable. Code preserves evidence,
-versions and scope in SQLite. Model weights remain unchanged.
+![Wake checks lessons before use; Sleep drafts and assesses lessons before saving them.](docs/assets/jev-memory-wake-sleep-v2.png)
 
-This is an executable **research proof of concept**. The memory mechanics run; useful
-learning and improved task success are still hypotheses under evaluation.
-Local inference is the default, and Jev is an optional provider.
+**Research prototype.** Storage and retrieval work. Better task performance is not yet proven.
 
-[Concept & philosophy](docs/CONCEPT.md) · [Quick start](#quick-start) ·
-[Observed results](docs/EVALUATION.md) · [Re-verification](docs/REVERIFICATION.md)
+## One lesson. Two different decisions.
 
-## The idea: experience → conditional memory → informed action
+Suppose an agent misses records because it reads only the first API page.
+The intended lesson is:
 
-An agent can complete a task without retaining a reusable lesson. It can also remember
-an overly broad lesson and apply it where it does not belong. We study both decisions:
-**what is worth remembering, and when is it appropriate to use it?**
+> **When all records are requested, follow the page cursor until the end.**
 
-For example, a useful pagination lesson would be:
+| Next request | Intended memory decision |
+|---|---|
+| “Export **all** customer records.” | Use the lesson. |
+| “Show **only the first page**.” | Skip the lesson. |
 
-> When **all records** are requested from a cursor-paginated API, follow the cursor
-> until completion. Do not extend a request for **only the first page**.
+This is the behavior we want to test. The current system does not always get it right.
 
-That is an intended lesson, not a claim that the current reflector always produces it.
-[The latest local check](docs/REVERIFICATION.md#fresh-real-inference) produced broader
-advice and failed to preserve this distinction.
+## Two phases. Three roles.
 
-### Wake and Sleep in this project
+**Sleep — learn from the supplied record.** An LLM drafts a lesson from task observations.
+A decision model checks its support. Code saves accepted lessons with their evidence.
+Uncertain candidates stay pending.
 
-| Phase | Question | Current implementation |
-|---|---|---|
-| **Wake** | Which past lessons fit this task? | Scope filters → lexical shortlist → applicability decisions → bounded context |
-| **Sleep** | What should this experience teach future tasks? | Supplied episode → optional reflection trigger → LLM lesson draft → admission decision → versioned memory |
+**Wake — check before reuse.** Code finds candidate lessons. A decision model checks
+whether their conditions fit the new task. The host agent receives the selected advice.
 
-The host solves the actual task and supplies observations. The core does not collect
-all host activity automatically. “Sleep” means a separate reflection step; it is not
-an always-running background service or an overnight scheduler.
+| Role | Job |
+|---|---|
+| **LLM** | Write the lesson. Include conditions and exceptions. |
+| **Decision model** | Judge whether to save it or use it. Jev is one example. |
+| **Code** | Check evidence hashes. Enforce scope. Save versions. |
 
-```mermaid
-flowchart LR
-    E[Host-supplied observations] --> R[Sleep: draft lessons]
-    R --> A[Judge evidence and scope]
-    A --> M[(Conditional memory)]
-    T[New task] --> W[Wake: retrieve and judge applicability]
-    M --> W
-    W --> H[Context for host solver]
-```
+The host runs tasks and supplies observations. Sleep runs when called; it is not an
+automatic overnight process. Model weights do not change.
 
-### Is this Dreaming?
 
-**Wake–Sleep names the phase structure; Dreaming can name a method used within Sleep.**
-The terms are not interchangeable, and different projects use them differently.
-In [DreamCoder](https://github.com/ellisk42/ec/blob/master/dreamcoder/dreaming.py),
-generated program/task examples contribute to training a recognition model; its
-[main loop](https://github.com/ellisk42/ec/blob/master/dreamcoder/dreamcoder.py) also
-learns program-library abstractions. Our Sleep reflects on existing observations.
-It does not generate dream tasks, train a recognition network or discover reusable functions.
-This is an analogy to the phase separation, not a reproduction of DreamCoder.
-
-### Where does LLM Wiki fit?
-
-[LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) describes
-maintaining an interconnected knowledge base from sources. Jev Memory focuses on
-conditional advice extracted from task experience. A wiki can also contain procedures;
-the difference here is the workflow and verification target, not the file format.
-
-| Approach | Main artifact | Central question | Relationship here |
-|---|---|---|---|
-| LLM Wiki / Jev Wiki | Source-backed knowledge pages | What do the sources say, and how do they connect? | Complementary knowledge layer; no integration yet |
-| Jev Memory | Lessons with conditions, exceptions and evidence | Should this experience guide the current action? | Implemented as an experimental memory core |
-| DreamCoder | Programs, learned library and recognition model | Can learned structure improve program search? | Research inspiration; not implemented |
-
-[Jev Wiki](https://github.com/JayYun98/jev-wiki) is our separate, currently private
-project. We reuse its **division of responsibility**, not its code or storage:
-**the LLM writes, the decision model judges, deterministic code commits.**
-There is no bundled wiki, page ingestion, Markdown synchronization or shared index.
-A future host could consult both systems; that is a proposed composition, not a current feature.
-
-## Philosophy
-
-- **Preserve the reason and the boundary.** A lesson needs supporting observations,
-  preconditions and exceptions; a polished summary alone is insufficient.
-- **Separate creation from judgment.** A writer can propose advice without granting
-  itself authority to store or apply it. The judge is still fallible.
-- **Treat memory as advice.** Retrieved experience cannot override the current request.
-  Abstaining is preferable to forcing an uncertain match.
-- **Measure behavior, not memory volume.** Storage and retrieval are intermediate
-  mechanics. The goal is better task outcomes without harmful transfer; we have not
-  established that benefit yet.
-
-See [the fuller concept note](docs/CONCEPT.md) for the proposed Wiki relationship,
-research boundaries and what would count as evidence that the idea works.
 
 ## What it does
 
@@ -108,22 +54,75 @@ research boundaries and what would count as evidence that the idea works.
 - Starts in **shadow mode**: records decisions without activating or injecting lessons.
 - Includes a CLI, an opt-in Hermes hook and reproducible local evaluation scripts.
 
-This is an executable **proof of concept**, not a production-ready service.
-See [scope and re-verification](docs/REVERIFICATION.md).
 
-This is an experimental **lesson-memory** release. It does not train model weights,
-execute learned code skills, or implement DreamCoder/Stitch abstraction learning.
+## The principle
 
-## Quick start
+**Keep the evidence. Keep the conditions. Allow “do not use.”**
 
-Python 3.11+ and [uv](https://docs.astral.sh/uv/) are required.
+A lesson is advice, not an instruction that overrides the user.
+We measure success by better task outcomes and fewer harmful uses—not by how much memory we save.
+
+## Is this LLM Wiki + Dreaming?
+
+They are related ideas, with different jobs:
+
+| Idea | What it adds | Included here? |
+|---|---|---|
+| **LLM Wiki** | Connected knowledge pages built from sources | No. Wiki integration is future work. |
+| **Wake–Sleep memory** | Lessons from experience, checked before reuse | Yes, as a prototype. |
+| **DreamCoder-style dreaming** | Generated practice examples used for learning | No. |
+
+[Jev Wiki](https://github.com/JayYun98/jev-wiki) maintains source-backed Markdown knowledge.
+Jev Memory applies the same **writer–decision model–code** separation to task experience.
+Both are independent projects; Wiki integration is not implemented.
+[Read the comparison and sources →](docs/CONCEPT.md)
+
+## What has been verified?
+
+- **55 tests and CI passed.** Local model calls, storage, retrieval and archiving were exercised.
+- **A limitation remains.** A local writer produced overly broad advice. Both judges selected
+  it for a request that should have tested a narrower condition.
+- **No learning advantage established.** The small task evaluation did not show a gain
+  for the gated variants over ordinary retrieval.
+
+[Task results](docs/EVALUATION.md) · [Latest generated-lesson check](docs/REVERIFICATION.md)
+
+## Try it
+
+Python 3.11+ and `uv` are required.
 
 ```bash
 git clone https://github.com/JayYun98/jev-memory.git
 cd jev-memory
 uv sync --locked
-uv run jev-memory --help
 ```
+
+[Start the local Clef server](docs/LOCAL.md), then inspect a decision without activating a lesson:
+
+```bash
+uv run jev-memory admit examples/admission.jsonl
+```
+
+The default is **shadow mode**: it records decisions but does not activate lessons or
+inject advice. Traces still remain in the local database.
+
+<details>
+<summary>Activate an accepted lesson and retrieve it</summary>
+
+```bash
+uv run jev-memory --apply admit examples/admission.jsonl
+uv run jev-memory --apply wake examples/tasks.jsonl
+```
+
+An uncertain decision can leave the lesson pending. An empty retrieval is possible.
+
+</details>
+
+Local inference needs no API key. You can also use a local chat model or choose cloud Jev.
+Cloud selection sends the relevant input to that provider.
+
+<details>
+<summary>Provider setup and full Sleep / Wake examples</summary>
 
 ### Use an existing local language model
 
@@ -162,7 +161,7 @@ uv run jev-memory --apply wake examples/tasks.jsonl
 The reflector still uses a separate local chat endpoint. Clef makes decisions;
 it does not generate lesson text.
 
-### Use Jev instead
+### Use a cloud decision model: Jev
 
 Credentials come from your process environment. This package does not search personal
 env files or save API keys in SQLite.
@@ -178,7 +177,12 @@ uv run jev-memory --provider typesafe admit examples/admission.jsonl
 Explicit cloud selection sends the relevant task/observations to that provider.
 Reflection remains local unless `sleep --cloud-writer --writer-model ...` is specified.
 
-## Verification
+
+</details>
+
+<details>
+<summary>Reproduce the verification</summary>
+
 
 ```bash
 uv run pytest --cov=jev_memory
@@ -196,7 +200,11 @@ See [evaluation protocol and results](docs/EVALUATION.md). Offline contract test
 live local model results and downstream task success are reported separately.
 A six-case smoke result is not evidence of general benchmark performance.
 
-## Integration and boundaries
+
+</details>
+
+## Boundaries
+
 
 [Hermes setup](docs/HERMES.md) · [Design decisions](docs/IMPLEMENTATION.md) ·
 [Security](SECURITY.md)
@@ -210,11 +218,8 @@ Episode text and candidate lessons are stored locally, including in shadow mode.
 Use a private database directory, redact sensitive traces, and treat all retrieved
 advice as subordinate to current user and host instructions.
 
-## Related work
 
-Inspired by [Jev Wiki](https://github.com/JayYun98/jev-wiki): **Jev decides. Your LLM
-writes. Code preserves evidence.** That repository is currently private; it is a
-provenance reference, not a required dependency. No private Wiki source is included.
+## Related work
 
 [Clef-Flash](https://huggingface.co/Cloudflare/clef-flash) provides the open-weight
 decision model. [Hermes](https://github.com/NousResearch/hermes-agent) is the first

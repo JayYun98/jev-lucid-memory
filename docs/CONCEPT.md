@@ -48,7 +48,7 @@ The [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11
 maintains persistent, connected knowledge pages from source material. It describes a
 pattern rather than a package we import. Our separate [Jev Wiki](https://github.com/JayYun98/jev-wiki)
 project applies a writer/judge/code separation to source-backed wiki maintenance.
-That repository is private and is not a dependency of this project.
+That repository is public. The projects are independent; neither is a dependency of the other.
 
 Both projects aim to accumulate useful external artifacts while keeping their provenance.
 They have different immediate jobs:
@@ -64,7 +64,7 @@ artifact it maintains and how its usefulness is assessed.
 
 **Current integration status: none.** Jev Memory has no wiki importer/exporter, shared
 index or synchronization. Markdown README files do not constitute an LLM Wiki feature.
-The shared philosophy is implemented independently; no private Wiki source is copied.
+The shared philosophy is implemented independently; no Wiki source is copied.
 
 A possible future composition is:
 

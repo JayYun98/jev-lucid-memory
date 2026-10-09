@@ -34,8 +34,8 @@ Executable code skills, Stitch abstraction learning, and Jev weight training are
 
 ## Influences
 
-[Jev Wiki](https://github.com/JayYun98/jev-wiki) is the author's earlier, currently private project:
+[Jev Wiki](https://github.com/JayYun98/jev-wiki) is the author's earlier, now public project:
 Jev decides, a host LLM writes, code hashes and commits evidence-backed Markdown.
 This implementation carries over the *division of responsibility*, revision checks, explicit
-uncertainty and no silent truncation. It does not import Jev Wiki or copy its private sources.
-The reference is provenance, not a required dependency or a claimed public resource.
+uncertainty and no silent truncation. It does not import Jev Wiki or copy its sources.
+The reference is provenance, not a required dependency or an implemented integration.
