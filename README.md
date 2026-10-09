@@ -9,7 +9,8 @@ A **decision model**, such as Jev, judges what to keep and when to use it.
 
 ![Wake checks lessons before use; Sleep drafts and assesses lessons before saving them.](docs/assets/jev-memory-wake-sleep-v2.png)
 
-**Research prototype.** Storage and retrieval work. Better task performance is not yet proven.
+**Research prototype.** Implements a wake–sleep memory loop with local evaluation.
+Task-performance gains have not yet been demonstrated for this implementation.
 
 ## One lesson. Two different decisions.
 
@@ -212,6 +213,12 @@ Use a private database directory, redact sensitive traces, and treat all retriev
 advice as subordinate to current user and host instructions.
 
 ## Related work
+
+Inspired by the [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
+and the Harvey work highlighted in [Niko Grupen’s post](https://x.com/nikogrupen/status/2108226990792900876).
+Anthropic [reports roughly 6× higher completion rates in Harvey’s tests with dreaming](https://claude.com/resources/articles/new-in-claude-managed-agents).
+That result belongs to Harvey’s system; it is not a result for Jev Lucid Memory.
+[Implementation scope and comparison →](docs/CONCEPT.md#harvey-and-managed-agents-dreaming)
 
 [Clef-Flash](https://huggingface.co/Cloudflare/clef-flash) provides the open-weight
 decision model. [Hermes](https://github.com/NousResearch/hermes-agent) is the first

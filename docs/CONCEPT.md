@@ -113,3 +113,30 @@ improve and test the hypothesis, not to present the architecture as already succ
 
 [Results](EVALUATION.md) · [Fresh lifecycle check](REVERIFICATION.md) ·
 [Implementation decisions](IMPLEMENTATION.md)
+
+
+## Harvey and Managed Agents dreaming
+
+The [Harvey post shared by Niko Grupen](https://x.com/nikogrupen/status/2108226990792900876)
+is a project inspiration reference. Its X article/media endpoint could not be retrieved
+for this comparison; we do not claim a complete reproduction of that article.
+
+The independently accessible [Anthropic announcement](https://claude.com/resources/articles/new-in-claude-managed-agents)
+describes scheduled review across sessions and memory stores, pattern extraction and
+memory curation. It reports roughly sixfold higher completion rates in Harvey's tests.
+This is an external result for their system and test setting, not evidence that this
+repository improves legal tasks or reproduces their implementation.
+
+| Capability | Jev Lucid Memory |
+|---|---|
+| Reflect on supplied experience and retain lessons | Implemented |
+| Check lesson applicability before reuse | Implemented |
+| Scheduled cross-session memory consolidation | Not implemented; Sleep is explicitly invoked |
+| Automatic collection of host session transcripts | Not implemented; observations are caller-supplied |
+| Harvey legal-task harness and rubric evaluation | Not implemented or run |
+| Reproduction of Harvey's reported performance | Not established |
+
+Managed Agents dreaming and DreamCoder use the word differently: the former curates
+session-derived memory, while the latter includes generated training examples and
+program-library learning. Our workflow shares reflection and reuse ideas, but does
+not reproduce either complete system. See [our actual evaluation](EVALUATION.md).
