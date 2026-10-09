@@ -2,6 +2,8 @@
 
 **Remember useful experience. Apply it only when the conditions fit.**
 
+![Jev Memory: Wake selects applicable lessons; Sleep drafts and assesses evidence-backed lessons for versioned memory.](docs/assets/jev-memory-wake-sleep.png)
+
 Jev Memory explores a simple question: **can an agent turn experience into useful
 conditional advice, then recognize when that advice should—and should not—be reused?**
 
