@@ -1,4 +1,4 @@
-# Jev Memory
+# Jev Lucid Memory
 
 ### Turn task experience into lessons. Check when to use them.
 
@@ -92,8 +92,8 @@ Both are independent projects; Wiki integration is not implemented.
 Python 3.11+ and `uv` are required.
 
 ```bash
-git clone https://github.com/JayYun98/jev-memory.git
-cd jev-memory
+git clone https://github.com/JayYun98/jev-lucid-memory.git
+cd jev-lucid-memory
 uv sync --locked
 ```
 
