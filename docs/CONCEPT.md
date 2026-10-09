@@ -118,10 +118,12 @@ improve and test the hypothesis, not to present the architecture as already succ
 ## Harvey and Managed Agents dreaming
 
 The [Harvey post shared by Niko Grupen](https://x.com/nikogrupen/status/2108226990792900876)
-is a project inspiration reference. Its X article/media endpoint could not be retrieved
-for this comparison; we do not claim a complete reproduction of that article.
+is a project inspiration reference. The user subsequently supplied the full article,
+which describes Harvey’s own Jev-gated ten-cycle experiment. See the
+[article-to-code comparison](HARVEY_COMPARISON.md) for the updated review.
+We do not claim a complete reproduction of that experiment.
 
-The independently accessible [Anthropic announcement](https://claude.com/resources/articles/new-in-claude-managed-agents)
+The separate [Anthropic announcement](https://claude.com/resources/articles/new-in-claude-managed-agents)
 describes scheduled review across sessions and memory stores, pattern extraction and
 memory curation. It reports roughly sixfold higher completion rates in Harvey's tests.
 This is an external result for their system and test setting, not evidence that this

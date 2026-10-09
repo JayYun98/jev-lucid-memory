@@ -216,9 +216,9 @@ advice as subordinate to current user and host instructions.
 
 Inspired by the [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
 and the Harvey work highlighted in [Niko Grupen’s post](https://x.com/nikogrupen/status/2108226990792900876).
-Anthropic [reports roughly 6× higher completion rates in Harvey’s tests with dreaming](https://claude.com/resources/articles/new-in-claude-managed-agents).
-That result belongs to Harvey’s system; it is not a result for Jev Lucid Memory.
-[Implementation scope and comparison →](docs/CONCEPT.md#harvey-and-managed-agents-dreaming)
+Harvey’s article reports gains from its own Jev-gated Wake–Sleep experiment.
+Those results do not establish performance for Jev Lucid Memory.
+[Article-to-code comparison and implementation gaps →](docs/HARVEY_COMPARISON.md)
 
 [Clef-Flash](https://huggingface.co/Cloudflare/clef-flash) provides the open-weight
 decision model. [Hermes](https://github.com/NousResearch/hermes-agent) is the first
