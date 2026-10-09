@@ -81,6 +81,8 @@ Both are independent projects; Wiki integration is not implemented.
 
 ## What has been verified?
 
+**External results, not our validation.** Harvey [reports](https://x.com/nikogrupen/status/2108226990792900876) **2.9% → 15.7% all-pass** and **roughly halved costs with memory retrieval**. These are results from Harvey’s system. We have not yet validated either result for Jev Lucid Memory.
+
 - **Local verification.** Storage, retrieval, batch consolidation and repeated-cycle isolation are covered by the test suite. See [batch verification](docs/BATCH_SLEEP.md) for actual local model runs and their limits.
 - **A limitation remains.** A local writer produced overly broad advice. Both judges selected
   it for a request that should have tested a narrower condition.
