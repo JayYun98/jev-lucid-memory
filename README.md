@@ -52,6 +52,10 @@ automatic overnight process. Model weights do not change.
 - Merges duplicate evidence, preserves immutable revisions and detects concurrent changes.
 - Starts in **shadow mode**: records decisions without activating or injecting lessons.
 - Includes a CLI, an opt-in Hermes hook and reproducible local evaluation scripts.
+- Adds graded batch Sleep: propose, gate and atomically add/revise/merge/archive lessons.
+- Provides a review queue and frozen multi-cycle comparisons of no/full/selected memory.
+
+[Batch Sleep and local cycle evaluation →](docs/BATCH_SLEEP.md)
 
 ## The principle
 
@@ -77,7 +81,7 @@ Both are independent projects; Wiki integration is not implemented.
 
 ## What has been verified?
 
-- **55 tests and CI passed.** Local model calls, storage, retrieval and archiving were exercised.
+- **Local verification.** Storage, retrieval, batch consolidation and repeated-cycle isolation are covered by the test suite. See [batch verification](docs/BATCH_SLEEP.md) for actual local model runs and their limits.
 - **A limitation remains.** A local writer produced overly broad advice. Both judges selected
   it for a request that should have tested a narrower condition.
 - **No learning advantage established.** The small task evaluation did not show a gain

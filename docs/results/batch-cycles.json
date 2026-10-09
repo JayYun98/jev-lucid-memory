@@ -1,0 +1,105 @@
+{
+  "cli_smoke": {
+    "active_memories": 1,
+    "decision_model": "mlx-community/Qwen3.8-27B-4bit@10c35caafbb80f7dc6a7a432cdd11af10a6d4818",
+    "external_api_charges_usd": 0,
+    "mode": "--apply batch-sleep",
+    "source": "two observed, graded support episodes from llm-runtime-baseline cycle-1",
+    "writer_model": "mlx-community/Qwen3.8-27B-4bit@10c35caafbb80f7dc6a7a432cdd11af10a6d4818"
+  },
+  "cost_note": "Local API charges were zero; electricity and hardware costs were not measured.",
+  "date": "2026-10-09",
+  "interpretation": "The Clef decision rejected the single proposed memory. The generative gate admitted one memory in cycle 1, selected it in two of six queries, and proposed no new operation in cycle 2. Every query passed even without memory, so this run does not show accuracy improvement.",
+  "local_runs": {
+    "clef": {
+      "completed": true,
+      "cycles": [
+        {
+          "all_pass": {
+            "full_memory": 3,
+            "no_memory": 3,
+            "selected_memory": 3
+          },
+          "full_memory_queries": 0,
+          "id": "cycle-1",
+          "query_cases": 3,
+          "selected_memory_queries": 0,
+          "sleep": {
+            "operations": [],
+            "queue_id": 1,
+            "reason": "failed_criteria",
+            "status": "rejected"
+          },
+          "support_cases": 2
+        }
+      ],
+      "decision_model": "Cloudflare/clef-flash@fde727a287004204b7518dcc983fe64379776712",
+      "external_api_charges_usd": 0,
+      "prompt_hashes": {
+        "graders": [
+          "2b66adda35ad39584bb76a9d52e5df19ee11a82687e7eac728e29e354fb0a208",
+          "1284e4fdc969eeacc372662400dcfbcf8ccb2ce2164a9d377c93a37ac042c65b"
+        ],
+        "solve": "7830b0047ef6c05532aa384ca45b4f25e035cb20676e5733eaa90de2b3890a0a"
+      },
+      "script_sha256_at_run": null,
+      "writer_solver_grader_model": "mlx-community/Qwen3.8-27B-4bit@10c35caafbb80f7dc6a7a432cdd11af10a6d4818"
+    },
+    "generative_gate": {
+      "completed": true,
+      "cycles": [
+        {
+          "all_pass": {
+            "full_memory": 3,
+            "no_memory": 3,
+            "selected_memory": 3
+          },
+          "full_memory_queries": 3,
+          "id": "cycle-1",
+          "query_cases": 3,
+          "selected_memory_queries": 1,
+          "sleep": {
+            "operations": [
+              {
+                "action": "add",
+                "id": "3fbe1f6d7f821286c6604f0d734156944b46036875c29298bdd4dabb1caad8d1",
+                "revision": 1
+              }
+            ],
+            "status": "active"
+          },
+          "support_cases": 2
+        },
+        {
+          "all_pass": {
+            "full_memory": 3,
+            "no_memory": 3,
+            "selected_memory": 3
+          },
+          "full_memory_queries": 3,
+          "id": "cycle-2",
+          "query_cases": 3,
+          "selected_memory_queries": 1,
+          "sleep": {
+            "operations": [],
+            "status": "active"
+          },
+          "support_cases": 2
+        }
+      ],
+      "decision_model": "mlx-community/Qwen3.8-27B-4bit@10c35caafbb80f7dc6a7a432cdd11af10a6d4818",
+      "external_api_charges_usd": 0,
+      "prompt_hashes": {
+        "graders": [
+          "2b66adda35ad39584bb76a9d52e5df19ee11a82687e7eac728e29e354fb0a208",
+          "1284e4fdc969eeacc372662400dcfbcf8ccb2ce2164a9d377c93a37ac042c65b"
+        ],
+        "solve": "7830b0047ef6c05532aa384ca45b4f25e035cb20676e5733eaa90de2b3890a0a"
+      },
+      "script_sha256_at_run": "eb126f2c138fdbb0bc9e6cea1aa81af0b773caea134a8946bd2e8f45099d8153",
+      "writer_solver_grader_model": "mlx-community/Qwen3.8-27B-4bit@10c35caafbb80f7dc6a7a432cdd11af10a6d4818"
+    }
+  },
+  "protocol": "Synthetic local tool-action cycles; not a LAB reproduction. Same local model used in isolated solver/grader requests.",
+  "source_note": "The Clef run script hash was not captured at execution. The generative run source hash was captured before subsequent formatting and resume-identity changes."
+}

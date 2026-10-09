@@ -1,5 +1,8 @@
 # Evaluation
 
+For the newer graded, repeated-cycle path, see [Batch Sleep](BATCH_SLEEP.md).
+The single-episode results below describe the earlier evaluation and remain unchanged.
+
 ## Executed locally — 2026-10-09
 
 Apple M5 Pro, 64 GB unified memory, macOS; Python 3.12.8.
